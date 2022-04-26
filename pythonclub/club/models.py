@@ -1,3 +1,57 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
+class Meeting(models.Model):
+    title=models.CharField(max_length=255)
+    date=models.DateField()
+    time=models.CharField(max_length=255)
+    location=models.CharField(max_length=255)
+    agenda=models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.meetingtitle
+
+    class Meta:
+        db_table='Meeting'
+
+class MeetingMinutes(models.Model):
+    meeting=models.ForeignKey(Meeting, on_delete=models.DO_NOTHING)
+    attendance=models.ManyToManyField(User)
+    minutes=models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.meetingminutes
+    
+    class Meta:
+        db_table='MeetingMinutes'
+
+
+class Resource(models.Model):
+    name=models.CharField(max_length=255)
+    type=models.CharField(max_length=255)
+    url=models.URLField(null=True, blank=True)
+    date_entered=models.DateField()
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    description=models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.resourcename
+    
+    class Meta:
+        db_table='Resource'
+
+
+class Event(models.Model):
+    title=models.CharField(max_length=255)
+    location=models.CharField(max_length=255)
+    date=models.DateField()
+    time=models.CharField(max_length=255)
+    description=models.TextField(null=True, blank=True)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.eventtitle
+    
+    class Meta:
+        db_table='Event'
