@@ -10,7 +10,7 @@ class Meeting(models.Model):
     agenda=models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.meetingtitle
+        return self.title
 
     class Meta:
         db_table='Meeting'
@@ -21,7 +21,7 @@ class MeetingMinutes(models.Model):
     minutes=models.CharField(max_length=255)
 
     def __str__(self):
-        return self.meetingminutes
+        return self.meeting
     
     class Meta:
         db_table='MeetingMinutes'
@@ -36,7 +36,7 @@ class Resource(models.Model):
     description=models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.resourcename
+        return self.name
     
     class Meta:
         db_table='Resource'
@@ -51,7 +51,7 @@ class Event(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.eventtitle
+        return self.title
     
     class Meta:
         db_table='Event'
