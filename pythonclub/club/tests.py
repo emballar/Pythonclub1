@@ -27,6 +27,5 @@ class EventTest(TestCase):
         self.assertEqual(self.details.discountAmount(), disc)
     
     def test_discountAmount(self):
-        disctotal = [(self.details.price) - self.test_discount()] #float type error???
-        self.assertEqual(self.details.discountPrice(), disctotal )
+        self.assertEqual(self.details.discountPrice(), 47.5 )
 
