@@ -47,8 +47,18 @@ class Event(models.Model):
     location=models.CharField(max_length=255)
     date=models.DateField()
     time=models.CharField(max_length=255)
+    price=models.DecimalField(max_digits=6, decimal_places=2)
     description=models.TextField(null=True, blank=True)
     user=models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def discountAmount(self):
+        self.discount=self.price * .05
+        return self.discount
+    
+    def discountPrice(self):
+        disc=self.discountAmount()
+        self.discountedPrice=(self.price - disc)
+
 
     def __str__(self):
         return self.title
