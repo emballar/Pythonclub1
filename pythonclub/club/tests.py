@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Meeting, MeetingMinutes, Resource, Event
 import datetime
+from .forms import MeetingForm
 # Create your tests here.
 class MeetingTest(TestCase):
     def setUp(self):
@@ -27,5 +28,41 @@ class EventTest(TestCase):
         self.assertEqual(self.details.discountAmount(), disc)
     
     def test_discountAmount(self):
-        self.assertEqual(self.details.discountPrice(), 47.5 )
+        disc = self.details.price * (1  - .05)
+        self.assertEqual(self.details.discountPrice(), disc)
 
+class NewMeetingForm(TestCase):
+    def test_meetingform(self):
+        data={
+            'title':'Group Study',
+            'date' : datetime.date(2022,5,31),
+            'time':'9PM',
+            'location' : 'Zoom',
+            'agenda' : 'lets study together'
+            }
+        form=MeetingForm(data)
+        self.assertTrue(form.is_valid)
+
+#test is failing
+    def test_meetingform_Invalid(self):
+        data={
+            'title':'Group Study',
+            'date' : datetime.date(2022,5,32),
+            'location' : 'Zoom',
+            'agenda' : 'lets study together'
+            }
+        form=MeetingForm(data)
+        self.assertFalse(form.is_valid)
+
+class NewResourceForm(TestCase):
+    def test_resourceform(self):
+        data={
+            'name':'Learn Python',
+            'type' : 'Website',
+            'URL':'https://www.learnpython.org/',
+            'date entered' : datetime.date(2022,5,31),
+            'user' : 'Erin',
+            'description' : 'very helpful'
+            }
+        form=MeetingForm(data)
+        self.assertTrue(form.is_valid)

@@ -58,6 +58,7 @@ class Event(models.Model):
     def discountPrice(self):
         disc=self.discountAmount()
         self.discountedPrice=(self.price - disc)
+        return self.discountedPrice
 
 
     def __str__(self):
