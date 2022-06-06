@@ -69,12 +69,12 @@ class NewResourceForm(TestCase):
         form=MeetingForm(data)
         self.assertTrue(form.is_valid)
 
-class New_Event_Authentication_Test(TestCase):
+class New_Meeting_Authentication_Test(TestCase):
     def setUp(self):
         self.test_user=User.objects.create_user(username='testuser1', password='P@ssw0rd1')
-        self.title=Event.objects.create(title='Valorant Tournament')
-        self.event=Event.objects.create(title=self.title, location = 'Discord', user=self.test_user, date=datetime.date(7,2,2022), time='10:00pm', price=50.00, description="valorant tournament")
+        self.title=Meeting.objects.create(title='First meeting')
+        self.meeting=Meeting.objects.create(title=self.title, date=datetime.date(2022,5,30), time='10 am', location = 'Zoom', agenda= 'lets study', user=self.test_user)
 
     def test_redirect_if_not_logged_in(self):
-        response=self.client.get(reverse('newevent'))
-        self.assertRedirects(response, '/accounts/login/?next=/club/newevent/')
+        response=self.client.get(reverse('newmeeting'))
+        self.assertRedirects(response, '/accounts/login/?next=/club/newmeeting/')

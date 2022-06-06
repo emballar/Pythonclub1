@@ -8,12 +8,14 @@ class Meeting(models.Model):
     time=models.CharField(max_length=255)
     location=models.CharField(max_length=255)
     agenda=models.TextField(null=True, blank=True)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
     class Meta:
         db_table='Meeting'
+
 
 class MeetingMinutes(models.Model):
     meeting=models.ForeignKey(Meeting, on_delete=models.DO_NOTHING)
@@ -40,7 +42,6 @@ class Resource(models.Model):
     
     class Meta:
         db_table='Resource'
-
 
 class Event(models.Model):
     title=models.CharField(max_length=255)
